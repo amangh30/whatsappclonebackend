@@ -1,7 +1,7 @@
 import grid from 'gridfs-stream'
 import mongoose from "mongoose"
 
-const url = "http://localhost:8000"
+const url = "https://soft-ganache-829582.netlify.app/"
 
 const con = mongoose.connection;
 let gfs, gridfsBucket;
@@ -24,7 +24,7 @@ export const uploadFile = async(req,res)=>{
 export const getImage = async (request, response) => {
     try {   
         const file = await gfs.files.findOne({ filename: request.params.filename });
-        const readStream = gridfsBucket.openDownloadStream(file?._id);
+        const readStream = gridfsBucket.openDownloadStream(file._id);
         readStream.pipe(response);
     } catch (error) {
         response.status(500).json({ msg: error.message });
