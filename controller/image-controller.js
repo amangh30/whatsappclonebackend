@@ -3,7 +3,6 @@ import mongoose from "mongoose"
 
 const url = "https://whatsappbackend-c1dv.onrender.com"
 
-const con = mongoose.connection;
 let gfs, gridfsBucket;
 const conn = mongoose.connection;
 conn.once('open', () => {
@@ -14,11 +13,17 @@ conn.once('open', () => {
     gfs.collection('fs');
 });
 export const uploadFile = async(req,res)=>{
+    try{
     if(!req.file){
         return res.status(404).json("File not found");
     }
     const ImageUrl = `${url}/file/${req.file.filename}`;
     return res.status(200).json(ImageUrl);
+    }
+    catch(error)
+    {
+        console.log(error.message);
+    }
 }
 
 export const getImage = async (request, response) => {
